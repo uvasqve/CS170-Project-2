@@ -9,6 +9,8 @@
 #include <fstream>
 #include <time.h>
 
+#include "Instance.h"
+
 using namespace std;
 class Node
 {
@@ -21,11 +23,11 @@ private:
 	vector<Instance> dataObjects;
 public:
 	Node() {}
-	double leaveOneOut() { return rand()%100; }
+	double leaveOneOut() { return rand() % 100; }
 	double leaveOneOut(vector<int[]>, set<int>, set<int>);
 	void featureSearch(int);
 	void backwardElimination(int);
-	bool contains(vector<int>,int);
+	bool contains(vector<int>, int);
 	void setBestSoFar();
 	void setAccuracy();
 	void Train();
