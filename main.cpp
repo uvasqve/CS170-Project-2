@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Node.h"
 #include "Instance.h"
 using namespace std;
@@ -18,6 +16,7 @@ int main()
 		<< "My special algorithm" << endl;
 	cin >> algorithm_selection;
 	Node n;
+	n.readData();
 	n.featureSearch(number_of_features);
 	return 0;
 }
