@@ -1,0 +1,63 @@
+#pragma once
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <vector>
+
+using namespace std;
+
+class Instance
+{
+private:
+	int classification = 0;
+	vector<double> instanceData;
+public:
+	Instance(string data) { setInstanceData(data); };
+	void setClassification(int classification) { this->classification = classification; }
+	void setInstanceData(string data)
+	{
+		istringstream iss(data);
+		string sNum;
+		while (iss >> sNum)
+		{
+			{
+				cout << sNum << endl;
+				char symbol = sNum.at(10);
+				cout << "This is the symbol: " << symbol << endl;
+				int endNum = sNum.at(sNum.length() - 1) - 48;
+				cout << "This is the ending number: " << endNum << endl;
+
+				double decimal = stod(sNum.substr(0, 9));
+				if (symbol == '+')
+				{
+					decimal *= pow(10, endNum);
+				}
+				else if (symbol == '-')
+				{
+					decimal /= pow(10, endNum);
+				}
+
+				if (decimal == 1 || decimal == 2)
+				{
+					classification = decimal;
+				}
+				else if (decimal != 1 || decimal != 2)
+				{
+
+					instanceData.push_back(decimal);
+					
+				}
+				cout << "This is the previous number but in decimal: " << setprecision(9) << decimal << endl;
+				
+			}
+
+		}
+
+		cout << "Classification: " << classification << endl;
+		for (int i = 0; i < instanceData.size(); i++)
+		{
+			cout << "Printing out Vector: " << instanceData.at(i) << endl;
+		}
+	}
+};
