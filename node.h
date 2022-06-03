@@ -1,25 +1,23 @@
-#pragma once
-#include <set>
-#include <cstdlib>
+#include <iostream>
 
-class Node
+#include "Node.h"
+#include "Instance.h"
+using namespace std;
+
+int main()
 {
-private:
-	double bestSoFar;
-	double accuracy;
-	int data;
-	int feature;
-public:
-	Node();
-	double leaveOneOut() { return rand(); }	
-	double leaveOneOut(int,std::set<int>,std::set<int>);
-	std::set<int> features;
-	void featureSearch(int);
-	bool contains(std::set<int>, int feature);
-	void setBestSoFar();
-	void setAccuracy();
-	int getFeature() { return feature; }
-	double getAccuracy() { return accuracy; }
-	double getBestSoFar() { return bestSoFar; }
-};
-
+	srand(time(NULL));
+	int number_of_features = 0;
+	int algorithm_selection = 0;
+	cout << "Welcome to Bertie Woosters (change this to your name) Feature Selection Algorithm" << endl;
+	cout << "Please enter total number of features: ";
+	cin >> number_of_features;
+	cout << "Type the number of the algorithm you want to run." << endl;
+	cout << "Forward Selection" << endl
+		<< "Backward Elimination" << endl
+		<< "My special algorithm" << endl;
+	cin >> algorithm_selection;
+	Node n;
+	n.featureSearch(number_of_features);
+	return 0;
+}
