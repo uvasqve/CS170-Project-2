@@ -13,6 +13,7 @@ private:
 	int classification = 0;
 	vector<double> instanceData;
 public:
+	Instance() {}
 	Instance(string data) { setInstanceData(data); };
 	void setClassification(int classification) { this->classification = classification; }
 	void setInstanceData(string data)
@@ -46,10 +47,10 @@ public:
 				{
 
 					instanceData.push_back(decimal);
-					
+
 				}
 				cout << "This is the previous number but in decimal: " << setprecision(9) << decimal << endl;
-				
+
 			}
 
 		}
