@@ -8,6 +8,7 @@
 #include <vector>
 #include <fstream>
 #include <time.h>
+#include <math.h>
 
 #include "Instance.h"
 
@@ -24,9 +25,9 @@ private:
 public:
 	Node() {}
 	double leaveOneOut() { return rand() % 100; }
-	double leaveOneOut(vector<int[]>, set<int>, set<int>);
-	void featureSearch(int);
-	void backwardElimination(int);
+	double leaveOneOut(Instance,vector<double>, vector<int>, int);
+	void featureSearch();
+	void backwardElimination();
 	bool contains(vector<int>, int);
 	void setBestSoFar();
 	void setAccuracy();
@@ -35,5 +36,5 @@ public:
 	int getFeature() { return feature; }
 	double getAccuracy() { return accuracy; }
 	double getBestSoFar() { return bestSoFar; }
-	void readData();
+	string readData(string);
 };
