@@ -16,6 +16,11 @@ public:
 	Instance() {}
 	Instance(string data) { setInstanceData(data); };
 	void setClassification(int classification) { this->classification = classification; }
+	int dataSize() { return instanceData.size(); }
+	
+	int getClassification() { return classification; }
+	vector<double> getInstanceDataVector() { return instanceData; }
+	double getInstanceDataElement(int index) { return instanceData.at(index); }
 	void setInstanceData(string data)
 	{
 		istringstream iss(data);
@@ -23,11 +28,11 @@ public:
 		while (iss >> sNum)
 		{
 			{
-				cout << sNum << endl;
+				//cout << sNum << endl;
 				char symbol = sNum.at(10);
-				cout << "This is the symbol: " << symbol << endl;
+				//cout << "This is the symbol: " << symbol << endl;
 				int endNum = sNum.at(sNum.length() - 1) - 48;
-				cout << "This is the ending number: " << endNum << endl;
+				//cout << "This is the ending number: " << endNum << endl;
 
 				double decimal = stod(sNum.substr(0, 9));
 				if (symbol == '+')
@@ -49,16 +54,16 @@ public:
 					instanceData.push_back(decimal);
 
 				}
-				cout << "This is the previous number but in decimal: " << setprecision(9) << decimal << endl;
+				//cout << "This is the previous number but in decimal: " << setprecision(9) << decimal << endl;
 
 			}
 
 		}
 
-		cout << "Classification: " << classification << endl;
-		for (int i = 0; i < instanceData.size(); i++)
-		{
-			cout << "Printing out Vector: " << instanceData.at(i) << endl;
-		}
+		//cout << "Classification: " << classification << endl;
+		//for (int i = 0; i < instanceData.size(); i++)
+		//{
+		//	cout << "Printing out Vector: " << instanceData.at(i) << endl;
+		//}
 	}
 };
