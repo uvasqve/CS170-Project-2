@@ -7,19 +7,29 @@ using namespace std;
 int main()
 {
 	srand(time(NULL));
-	int number_of_features = 0;
-	int algorithm_selection = 0;
-	cout << "Welcome to Bertie Woosters (change this to your name) Feature Selection Algorithm" << endl;
-	cout << "Please enter total number of features: ";
-	cin >> number_of_features;
+	int choice = 0;
+	string filename;
+	cout << "Welcome to Ubaldo's Feature Selection Algorithm" << endl;
+	cout << "Type in the file you want to test: " << endl;
+	cin >> filename;
 	cout << "Type the number of the algorithm you want to run." << endl;
-	cout << "Forward Selection" << endl
-		<< "Backward Elimination" << endl
-		<< "My special algorithm" << endl;
-	cin >> algorithm_selection;
-	Node n;
-	n.readData();
-	//n.featureSearch(number_of_features);
-	n.featureSearch();
+	cout << "(1) Forward Selection" << endl
+		<< "(2) Backward Elimination" << endl;
+	cin >> choice;
+
+	if (choice == 1)
+	{
+		Node n;
+		cout << n.readData(filename) << endl;
+		n.featureSearch();
+	}
+	if (choice == 2)
+	{
+		Node n;
+		n.readData(filename);
+		n.backwardElimination();
+	}
+
+
 	return 0;
 }
