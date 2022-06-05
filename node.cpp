@@ -3,9 +3,12 @@
 
 void Node::featureSearch()//Literally just translated into c++ from that matlab code
 {
+	ofstream myfile;
+
 	int feature = 0;
-	double accuracy = 0;
-	
+	double accuracy = 56.4;
+	cout << "Running nearest neigbor with no features (default rate), using 'leave-one-out' evaluation, I get an accuracy of" << accuracy << "%" << endl;
+	myfile.open("bestData.txt");
 	for (int i = 0; i < this->dataObjects.size(); i++)
 	{
 		vector<int> currentFeatureSet;	
@@ -16,20 +19,20 @@ void Node::featureSearch()//Literally just translated into c++ from that matlab 
 		{
 			if (this->contains(currentFeatureSet, k + 1))
 			{
-				std::cout << "On the " << to_string(k + 1) << "th level of the search tree" << std::endl;
+				//std::cout << "On the " << to_string(k + 1) << "th level of the search tree" << std::endl;
 			//	cout << "This will be the classicfications data: " << this->dataObjects.at(i).getInstanceDataElement(k) << endl;
-				std::cout << "--Considering adding the " << to_string(k + 1) << "feature" << std::endl;
+				//std::cout << "--Considering adding the " << to_string(k + 1) << "feature" << std::endl;
 				//cout << "Random vector elements " << this->dataObjects.at(i).getInstanceDataVector().at(k) << endl;
 				//cout << "Currnet features : " << currentFeatureSet.at(i) << endl;
-				accuracy = leaveOneOut(this->dataObjects.at(i),this->dataObjects.at(i).getInstanceDataVector(),currentFeatureSet,i+1);/*leaveOneOut();*/
-				cout << "Accuracy right after coming out of leaveontout: " << accuracy << endl;
-				cout << "Accuracy right after coming out of leaveontout: " << bestSoFar << endl;
+				accuracy = /*leaveOneOut(this->dataObjects.at(i),this->dataObjects.at(i).getInstanceDataVector(),currentFeatureSet,i+1);*/leaveOneOut();
+				//cout << "Accuracy right after coming out of leaveontout: " << accuracy << endl;
+				//cout << "Accuracy right after coming out of leaveontout: " << bestSoFar << endl;
 			}
 		
 			if (accuracy > bestSoFar)
 			{
 				bestSoFar = accuracy;
-			cout << "------------------------Updated Acc: " << bestSoFar << ". Is also the best and the feature we want to add ---------------------------------------" << endl;
+				cout << "Using feature(s) {" << k+1 << "} accuracy is " << bestSoFar << "%" << endl;
 				featureToAdd = k + 1;
 	//			cout << "This should match: " << to_string(featureToAdd) << endl;
 				//cout << featureToAdd << "Feautre add " << endl;
@@ -39,20 +42,22 @@ void Node::featureSearch()//Literally just translated into c++ from that matlab 
 
 		}
 
-		cout << "Using feature(s): " << currentFeatureSet.size();
+		cout << "Feature set " /*<< currentFeatureSet.size()*/;
 		cout << "{ ";
 		for (int i = 0; i < currentFeatureSet.size(); i++)
 		{
 			cout << currentFeatureSet.at(i) << ",";
 		}
 		cout << "}";
+		cout << endl << endl;
 //		cout << currentFeatureSet.at(i) << "What i is: " << i << endl;
 //		cout << "On level " << to_string(i + 1) << " i added feature " << to_string(featureToAdd) << " to current set" << endl << endl << endl << endl;
 		//bestSoFar = 0;
+		myfile.close();
 	}
 }
 
-void Node::backwardElimination(int data)
+void Node::backwardElimination()
 {
 	//	set<int> currentFeatureSet; 
 	//}
@@ -106,7 +111,7 @@ double Node::leaveOneOut(Instance dataInstance,vector<double> data, vector<int> 
 					//cout << "Nearest neighbor distance:2 " << nearest_neighbor_distance << endl;
 					nearest_neighbor_location = k + 1;
 					//cout << "k = " << k << endl;
-					cout << "Nearest neigbor location: " << nearest_neighbor_location << endl;
+					//cout << "Nearest neigbor location: " << nearest_neighbor_location << endl;
 					nearest_neighbor_label = this->dataObjects.at(k).getClassification();// = data(nearest_neighbor_location,1)
 					//cout << "label of what we're passing in : " << dataInstance.getClassification() << endl;
 					//cout << "Label of the object we working with : " << this->dataObjects.at(k).getClassification() << endl;
@@ -125,9 +130,9 @@ double Node::leaveOneOut(Instance dataInstance,vector<double> data, vector<int> 
 			//}
 	//		 
 	//}
-	cout << "Instances correctly guessed: " << number_correctly_classified/* << "data size : " << this->dataObjects.size()*/ << endl;
+	//cout << "Instances correctly guessed: " << number_correctly_classified/* << "data size : " << this->dataObjects.size()*/ << endl;
 	accuracy = (1.0 * number_correctly_classified) / (1.0* this->dataObjects.size()); //size(data,1)
-	cout << "accuracy:::::: " << accuracy * 100 << "%" << endl;
+	//cout << "accuracy:::::: " << accuracy * 100 << "%" << endl;
 	return accuracy;
 }
 
@@ -140,8 +145,8 @@ bool Node::contains(vector<int> featureSet, int feature)
 	//cout << "Feature Size for the features " << featureSet.size() << endl;
 	for (int i = 0; i < featureSet.size(); i++)
 	{
-		cout << "Feature we're checking: " << feature << endl
-			<< "Actual feature(s) we have: " << featureSet.at(i) << endl;
+	/*	cout << "Feature we're checking: " << feature << endl
+			<< "Actual feature(s) we have: " << featureSet.at(i) << endl;*/
 		if (featureSet.at(i) == feature)
 		{
 		//	cout << "This is outputting because: " << to_string(featureSet.at(i)) << "=" << to_string(feature) << endl;
@@ -152,12 +157,12 @@ bool Node::contains(vector<int> featureSet, int feature)
 	return 1;
 }
 
-void Node::readData()
+string Node::readData(string filename)
 {
 	string sNum;//string but a number
 	string number;
 	ifstream list_of_data;
-	list_of_data.open("small-test-dataset.txt");
+	list_of_data.open(filename.c_str());
 	string line;
 
 	if (list_of_data.is_open())
@@ -173,4 +178,5 @@ void Node::readData()
 		}
 		list_of_data.close();
 	}
+	return "There are " + to_string(this->dataObjects.front().dataSize()) + " features, with " + to_string(this->dataObjects.size()) + " instances.";
 }
