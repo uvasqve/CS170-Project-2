@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Node.h"
 #include "Instance.h"
 using namespace std;
@@ -17,6 +19,7 @@ int main()
 	cin >> algorithm_selection;
 	Node n;
 	n.readData();
-	n.featureSearch(number_of_features);
+	//n.featureSearch(number_of_features);
+	n.featureSearch();
 	return 0;
 }
